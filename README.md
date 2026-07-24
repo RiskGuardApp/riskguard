@@ -1,13 +1,7 @@
-<div align="center">
-<img src="https://riskguard.finance/logo.png" alt="RiskGuard Logo" width="80" />
 RiskGuard
 Smart Wallet Risk Dashboard for DeFi
 Real-time risk intelligence for DeFi portfolios across Solana, Base and Ethereum.
-![Live](https://img.shields.io/badge/status-live-brightgreen)
-![Beta](https://img.shields.io/badge/phase-private%20beta-blue)
-![X](https://img.shields.io/badge/X-@RiskGuardApp-black)
-Try it now → · No wallet connection required · Paste any address
-</div>
+🔗 Try it now — riskguard.finance · No wallet connection required · Paste any address
 ---
 What is RiskGuard?
 RiskGuard automatically detects every DeFi position in a wallet and scores the real risk of each one — smart contract safety, liquidity depth, centralization, yield sustainability, exit risk, and more. When something changes — a TVL drop, an admin key change, a peg deviation — the user gets an alert before it becomes a loss.
@@ -39,40 +33,43 @@ Ethereum Mainnet — 7 protocols
 Aave V3 · Lido (stETH + wstETH) · Spark · Rocket Pool · Morpho Blue · Compound V3 · Uniswap V3
 ---
 Risk Model
-Each position is scored 0–100 across 4 weighted dimensions:
+Each position is scored 0–95 across 4 weighted dimensions:
 Dimension	Weight	What it measures
-Smart Contract	30%	Audit history, hack history, upgrade patterns, admin key concentration, operational maturity (Lindy effect), deployment verification
-Liquidity	25%	TVL with DeFi-calibrated thresholds ($500M+ = blue chip, <$20M = high risk), exit profile and lockup risk
+Smart Contract	30%	Audit history, hack history, upgrade patterns, admin key concentration, operational maturity, governance model
+Liquidity	25%	TVL with DeFi-calibrated thresholds, exit profile and lockup risk
 Centralization	25%	Admin key concentration + portfolio HHI diversification score
 Market	20%	Protocol ranking, yield sustainability (fees vs token emissions vs RWA)
-Additional criteria within each dimension
+Additional criteria
 Hack history — recent exploits penalize the score proportionally to severity and recency
-Operational maturity — Lindy effect: contracts with 3+ years of clean operation on mainnet receive a bonus, conditional on TVL > $100M
+Operational maturity — Lindy effect: contracts with 3+ years of clean operation receive a bonus (conditional on TVL > $100M)
+Governance model — immutable contracts score higher than upgradeable; EOA-controlled protocols receive significant penalties
 Yield sustainability — fees, incentives, mixed, or RWA-backed yields are classified and scored differently
-Exit and lockup risk — instant redemption vs delayed unstaking vs locked vaults are treated differently
-Leveraged positions — debt ratio and leverage multiplier apply additional penalties (a 3x position with 66% debt ratio scores significantly lower than an unleveraged position in the same protocol)
+Exit and lockup risk — instant redemption vs delayed unstaking vs locked vaults
+Leveraged positions — debt ratio and leverage multiplier apply additional penalties
 Concentrated liquidity range status
-For Uniswap V3, PancakeSwap V3 and Aerodrome V3, RiskGuard displays in-range / out-of-range status instead of APR estimates. Pool-level APR diverges 30%+ from actual position returns because it ignores the user's specific price range and time in-range. Range status is read directly from `slot0()` on the pool contract.
+For Uniswap V3, PancakeSwap V3 and Aerodrome V3, RiskGuard displays in-range / out-of-range status instead of estimated APR. Range status is read directly from `slot0()` on the pool contract.
+Confidence Score
+Each position carries a confidence score (High / Medium / Low) based on data quality — GoPlus availability, DeFiLlama slug verification, price feed freshness, Pegana calibration status. Risk score and confidence score are independent metrics.
 ---
 Real-Time Anomaly Detection
-A monitoring cron runs every 30 minutes across all tracked protocols, watching for:
+A monitoring cron runs every 30 minutes watching for:
 TVL drops exceeding defined thresholds
 APY spikes suggesting protocol instability
-Admin key changes (the vector used in the Drift Protocol exploit)
+Admin key changes
 Liquidity exits suggesting informed actor movement
 Peg deviations for LSTs and stablecoins (powered by Pegana)
-Alerts are delivered via email (Resend) and Telegram in real time.
----
-AI Analysis
-After position detection and risk scoring, RiskGuard generates a natural-language analysis of the full portfolio using the Claude API. The analysis references actual positions by name, uses real values and current APY figures, and produces a specific recommendation — not generic advice.
----
-Phishing Token Detection
-Contract analysis via GoPlus Security flags tokens with unverified source code, known malicious signatures, or patterns consistent with address poisoning attacks.
-During beta testing, RiskGuard detected a live phishing token — a fake AERO token impersonating Aerodrome Finance, tagged as `Fake_Phishing77` on Basescan — in a real user's wallet. The user had never interacted with the contract. The system caught it automatically.
+Alerts delivered via email and Telegram in real time.
 ---
 Peg Risk Monitoring
-Integration with Pegana provides real-time peg status for 14 LSTs and stablecoins on Solana — jitoSOL, mSOL, JupSOL, INF, USDC, USDT, and more.
-Pegana measures market price vs intrinsic value (not vs $1, which is the wrong anchor for most pegged assets). When an asset enters DRIFT or DEPEG state, the position's risk score updates automatically and the user receives an alert.
+Integration with Pegana provides real-time peg status for 14 LSTs and stablecoins — jitoSOL, mSOL, JupSOL, INF, USDC, USDT, and more.
+When an asset enters DRIFT or DEPEG state, the position's risk score updates automatically and the user receives an alert.
+---
+AI Analysis
+Natural language portfolio analysis powered by the Claude API (Anthropic). References actual positions by name, uses real values and current APY figures, and produces specific recommendations — not generic advice.
+---
+Phishing Token Detection
+Contract analysis via GoPlus Security flags tokens with unverified source code or patterns consistent with address poisoning attacks.
+During beta testing, RiskGuard detected a live phishing token — a fake AERO token impersonating Aerodrome Finance — in a real user's wallet. The user had never interacted with the contract. The system caught it automatically.
 ---
 Technical Stack
 Layer	Technology
@@ -90,25 +87,17 @@ TVL Data	DeFiLlama
 Deploy	Vercel (frontend) · Railway (backend)
 ---
 Data Sources & Integrations
-<div align="center">
 Helius · Alchemy · DeFiLlama · GoPlus Security · Pegana · Anthropic Claude
-</div>
 ---
 Current Status
 Phase: Private beta
 Protocols detected: 32 (15 Solana · 10 Base · 7 Ethereum)
-Infrastructure: Live at riskguard.finance
+Live at: riskguard.finance
+X: @RiskGuardApp
 Upcoming: Public launch with Free / Pro ($15/mo) / Whale ($49/mo) plans
 ---
 Try It
-No wallet connection required. Paste any public address at riskguard.finance/app and see the full dashboard in seconds — risk scores, position detection, AI analysis, and peg status.
+No wallet connection required. Paste any public address at riskguard.finance/app and see the full dashboard in seconds.
 ---
-Contact
-X: @RiskGuardApp
-Website: riskguard.finance
-Feedback: feedback button in the dashboard
----
-<div align="center">
-RiskGuard is in private beta. The codebase is closed source.
+RiskGuard is in private beta. The codebase is closed source.  
 Protocol detection logic, risk model calibration, and anomaly detection represent the core IP of the product.
-</div>
