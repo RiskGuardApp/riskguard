@@ -1,3 +1,5 @@
+<div align="center">
+<img src="https://riskguard.finance/logo.png" alt="RiskGuard Logo" width="80" />
 RiskGuard
 Smart Wallet Risk Dashboard for DeFi
 Real-time risk intelligence for DeFi portfolios across Solana, Base and Ethereum.
@@ -106,4 +108,7 @@ X: @RiskGuardApp
 Website: riskguard.finance
 Feedback: feedback button in the dashboard
 ---
-
+<div align="center">
+RiskGuard is in private beta. The codebase is closed source.
+Protocol detection logic, risk model calibration, and anomaly detection represent the core IP of the product.
+</div>
