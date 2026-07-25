@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="https://riskguard.finance/logo.png" alt="RiskGuard Logo" width="80" />
+![RiskGuard Logo](./riskguard.png)
 
 # RiskGuard
 
